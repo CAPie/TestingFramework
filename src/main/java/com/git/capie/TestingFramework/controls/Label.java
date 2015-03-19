@@ -43,6 +43,10 @@ public class Label implements ILabel {
 		return wrapperOfWebElement.getText();
 	}
 	
+	public void click(){
+		wrapperOfWebElement.click();
+	}
+	
 	public boolean isDisplayed(){
 		return wrapperOfWebElement.isDisplayed();
 	}
@@ -51,6 +55,9 @@ public class Label implements ILabel {
 		return wrapperOfWebElement.isEnabled();
 	}
 	
+	public WrapperOfWebElement getWrapperOfWebElement(){
+		return wrapperOfWebElement;
+	}
 	public LocationOfWebElement getLocation(){
 		return locationOfWebElement;
 	}
