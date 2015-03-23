@@ -1,13 +1,17 @@
 package com.git.capie.TestingFramework.controls;
 
-interface ILabel {
+interface ICheckBox {
 	String getAttribute(String attribute);
 
-	String getText();
-
-	String getContent();
-
-	ILabelClickable makeLabelClickable();
+	String getName();
+	
+	boolean isChecked();
+	
+	void check();
+	
+	void uncheck();
+	
+	void submit();
 
 	boolean isDisplayed();
 
