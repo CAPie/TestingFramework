@@ -3,38 +3,38 @@ package com.git.capie.TestingFramework.controls;
 import com.git.capie.TestingFramework.tools.LocationOfWebElement;
 import com.git.capie.TestingFramework.tools.WrapperOfWebElement;
 
-public class Link implements ILink {	
+public class Button implements IButton {
 	private WrapperOfWebElement wrapperOfWebElement;
 	private LocationOfWebElement locationOfWebElement;
 
-	private Link(WrapperOfWebElement wrapperOfWebElement,
+	private Button(WrapperOfWebElement wrapperOfWebElement,
 			LocationOfWebElement locationOfWebElement) {
 		this.wrapperOfWebElement = wrapperOfWebElement;
 		this.locationOfWebElement = locationOfWebElement;
 	}
 
-	public static ILink getById(String id) {
+	public static IButton getById(String id) {
 		return get(LocationOfWebElement.getLocationById(id));
 	}
 
-	public static ILink getByName(String name) {
+	public static IButton getByName(String name) {
 		return get(LocationOfWebElement.getLocationByName(name));
 	}
 
-	public static ILink getByPartialLinkText(String linkText) {
+	public static IButton getByPartialLinkText(String linkText) {
 		return get(LocationOfWebElement.getLocationByPartialLinkText(linkText));
 	}
 
-	public static ILink getByXpath(String xpathExpression) {
+	public static IButton getByXpath(String xpathExpression) {
 		return get(LocationOfWebElement.getLocationByXPath(xpathExpression));
 	}
 
-	public static ILink getByCssSelector(String selector) {
+	public static IButton getByCssSelector(String selector) {
 		return get(LocationOfWebElement.getLocationByCssSelector(selector));
 	}
 
-	private static ILink get(LocationOfWebElement locationOfWebElement) {
-		return new Link(
+	private static IButton get(LocationOfWebElement locationOfWebElement) {
+		return new Button(
 				WrapperOfWebElement.getVisibleWebElement(locationOfWebElement),
 				locationOfWebElement);
 	}
@@ -51,19 +51,19 @@ public class Link implements ILink {
 		return wrapperOfWebElement.getText();
 	}
 
-	public String getUrl() {
-		return wrapperOfWebElement.getUrl();
-	}
-
 	public void click() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public boolean isDisplayed() {
-		return wrapperOfWebElement.isDisplayed();
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	public boolean isEnabled() {
-		return wrapperOfWebElement.isEnabled();
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	public WrapperOfWebElement getWrapperOfWebElement(){

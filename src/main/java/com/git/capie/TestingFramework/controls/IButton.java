@@ -1,10 +1,10 @@
 package com.git.capie.TestingFramework.controls;
 
-interface ILabel {
+interface IButton {
 	String getAttribute(String attribute);
-	String getText();
 	String getContent();
-	ILabelClickable makeLabelClickable();
+	String getText();
+	void click();
 	boolean isDisplayed();
 	boolean isEnabled();
 }

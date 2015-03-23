@@ -51,8 +51,8 @@ public class Label implements ILabel {
 		return wrapperOfWebElement.getContent();
 	}
 	
-	public void click(){
-		wrapperOfWebElement.click();
+	public ILabelClickable makeLabelClickable(){
+		return LabelClickable.makeLabelClicable(this);
 	}
 	
 	public boolean isDisplayed(){
