@@ -1,8 +1,17 @@
 package com.git.capie.TestingFramework.tools;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.openqa.selenium.WebElement;
 
 public class WrapperOfWebElement {
+	private final String EMPTY = "";
+	private final String GET_TEXT_PATTERN = "(^|>)([^<>]+)($|<)";
+	private final String SPACE = " ";
+	private final String HREF_ATTRIBUTE = "href";
+	private final String NAME_ATTRIBUTE = "name";
+	private final int MATCHER_GET_TEXT_GROUP = 2;
 	private WebElement webelement;
 
 	private WrapperOfWebElement(WebElement webelement) {
@@ -38,12 +47,31 @@ public class WrapperOfWebElement {
 		return this.webelement.isSelected();
 	}
 
-	public String getText() {
+	public String getContent() {
 		return this.webelement.getText();
 	}
-	
+
+	public String getText() {
+		String text = EMPTY;
+		Matcher matcher = Pattern.compile(GET_TEXT_PATTERN).matcher(getContent());
+		while (matcher.find()){
+			if (!matcher.group(MATCHER_GET_TEXT_GROUP).trim().isEmpty()){
+				text = text + SPACE + matcher.group(MATCHER_GET_TEXT_GROUP).trim();
+			}
+		}
+		return text;
+	}
+
 	public String getAttribute(String attribute) {
 		return this.webelement.getAttribute(attribute);
+	}
+	
+	public String getUrl(){
+		return this.webelement.getAttribute(HREF_ATTRIBUTE);
+	}
+	
+	public String getName(){
+		return this.webelement.getAttribute(NAME_ATTRIBUTE);
 	}
 
 	public void sendKeys(String text) {

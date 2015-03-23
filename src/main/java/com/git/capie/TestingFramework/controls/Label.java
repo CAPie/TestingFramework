@@ -38,9 +38,17 @@ public class Label implements ILabel {
 				WrapperOfWebElement.getVisibleWebElement(locationOfWebElement),
 				locationOfWebElement);
 	}
+	
+	public String getAttribute(String attribute) {
+		return wrapperOfWebElement.getAttribute(attribute);
+	}
 
 	public String getText() {
 		return wrapperOfWebElement.getText();
+	}
+
+	public String getContent() {
+		return wrapperOfWebElement.getContent();
 	}
 	
 	public void click(){
