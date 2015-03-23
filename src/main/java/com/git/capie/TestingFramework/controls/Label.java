@@ -21,10 +21,6 @@ public class Label implements ILabel {
 		return get(LocationOfWebElement.getLocationByName(name));
 	}
 
-	public static ILabel getByPartialLinkText(String linkText) {
-		return get(LocationOfWebElement.getLocationByPartialLinkText(linkText));
-	}
-
 	public static ILabel getByXpath(String xpathExpression) {
 		return get(LocationOfWebElement.getLocationByXPath(xpathExpression));
 	}

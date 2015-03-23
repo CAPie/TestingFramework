@@ -20,10 +20,6 @@ public class CheckBox implements ICheckBox{
 		return get(LocationOfWebElement.getLocationByName(name));
 	}
 
-	public static ICheckBox getByPartialLinkText(String linkText) {
-		return get(LocationOfWebElement.getLocationByPartialLinkText(linkText));
-	}
-
 	public static ICheckBox getByXpath(String xpathExpression) {
 		return get(LocationOfWebElement.getLocationByXPath(xpathExpression));
 	}
