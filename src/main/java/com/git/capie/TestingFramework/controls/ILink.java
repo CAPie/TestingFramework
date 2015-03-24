@@ -1,6 +1,6 @@
 package com.git.capie.TestingFramework.controls;
 
-interface ILink {
+public interface ILink {
 	String getAttribute(String attribute);
 	String getContent();
 	String getText();

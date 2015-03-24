@@ -12,7 +12,7 @@ public class CheckBoxWithLabel implements ICheckBoxWithLabel{
 		this.labelClickable = labelClickable;
 	}
 	
-	public static ICheckBoxWithLabel get(CheckBox checkBox, ILabelClickable labelClickable){
+	public static ICheckBoxWithLabel get(ICheckBox checkBox, ILabelClickable labelClickable){
 		return new CheckBoxWithLabel(checkBox, labelClickable);
 	}
 	

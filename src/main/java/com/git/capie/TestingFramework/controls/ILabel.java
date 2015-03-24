@@ -1,6 +1,6 @@
 package com.git.capie.TestingFramework.controls;
 
-interface ILabel {
+public interface ILabel {
 	String getAttribute(String attribute);
 
 	String getText();

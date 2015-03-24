@@ -3,7 +3,7 @@ package com.git.capie.TestingFramework.controls;
 import com.git.capie.TestingFramework.controls.RadioButtonGroup.ActionBy;
 
 
-interface IRadioButtonGroup {
+public interface IRadioButtonGroup {
 	
 	IRadioButtonWithLabel getCheckedRadioButton();
 	

@@ -1,6 +1,6 @@
 package com.git.capie.TestingFramework.controls;
 
-interface IRadioButtonGroupNext {
+public interface IRadioButtonGroupNext {
 	IRadioButtonGroupNext addNextRadioButton(RadioButtonWithLabel radioButtonWithLabel);
 	
 	IRadioButtonGroup build();

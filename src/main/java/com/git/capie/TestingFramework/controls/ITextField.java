@@ -1,6 +1,6 @@
 package com.git.capie.TestingFramework.controls;
 
-interface ITextField {
+public interface ITextField {
 	String getAttribute(String attribute);
 	String getText();
 	String getContent();

@@ -1,6 +1,6 @@
 package com.git.capie.TestingFramework.controls;
 
-interface IButton {
+public interface IButton {
 	String getAttribute(String attribute);
 
 	String getContent();

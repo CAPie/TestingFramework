@@ -1,6 +1,6 @@
 package com.git.capie.TestingFramework.controls;
 
-interface ICheckBox {
+public interface ICheckBox {
 	String getAttribute(String attribute);
 
 	String getName();
