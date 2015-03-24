@@ -7,7 +7,7 @@ public class CheckBoxWithLabel implements ICheckBoxWithLabel{
 	private ICheckBox checkBox;
 	private ILabelClickable labelClickable;
 	
-	private CheckBoxWithLabel(CheckBox checkBox, ILabelClickable labelClickable){
+	private CheckBoxWithLabel(ICheckBox checkBox, ILabelClickable labelClickable){
 		this.checkBox = checkBox;
 		this.labelClickable = labelClickable;
 	}
