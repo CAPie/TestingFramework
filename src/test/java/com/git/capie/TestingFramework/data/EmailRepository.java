@@ -39,8 +39,8 @@ public class EmailRepository {
 		// TODO Mirantis
 		// companiesHREmailesInLviv.add("");
 
-		// SymphonySolutions
-		companiesHREmailesInLviv.add("jobs@symphony-solutions.eu ");
+		// TODO SymphonySolutions
+		companiesHREmailesInLviv.add("jobs@symphony-solutions.eu");
 
 		// TODO N-iX
 		// companiesHREmailesInLviv.add("");
