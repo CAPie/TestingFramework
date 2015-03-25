@@ -15,9 +15,6 @@ import com.git.capie.TestingFramework.controls.TextField;
 public class LoginPage {
 	private class LoginPageUIMap {
 		public final ILink UkrNetImg;
-		public final ILink UALang;
-		public final ILink RULang;
-		public final ILink ENLang;
 		public final ITextField loginField;
 		public final ITextField passwdField;
 		public final ICheckBoxWithLabel publicPlaceChBox;
@@ -27,9 +24,6 @@ public class LoginPage {
 		
 		public LoginPageUIMap() {
 			this.UkrNetImg = Link.getByCssSelector(".logo");
-			this.UALang = Link.getByPartialLinkText("Укр");
-			this.RULang = Link.getByPartialLinkText("Рус");
-			this.ENLang = Link.getByPartialLinkText("Eng");
 			this.loginField = TextField.getById("login");
 			this.passwdField= TextField.getById("password");
 			this.publicPlaceChBox = CheckBoxWithLabel.get(CheckBox.getByXpath(".//*[@id='login-form']/label/input"), Label.getByXpath(".//*[@id='login-form']/label/span").makeLabelClickable());

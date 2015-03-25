@@ -18,7 +18,7 @@ public class SpamTest {
 	
 	@DataProvider(name="emails")
 	public Object[][] getEmails(){
-		return ListUtils.listToArray(EmailRepository.getMyEmail());
+		return ListUtils.listToArray(EmailRepository.getCompaniesHREmailesInLviv());
 	}
 	
 	@BeforeClass
@@ -29,8 +29,6 @@ public class SpamTest {
 	
 	@Test(dataProvider = "emails")
 	public void sendEMail(String email){
-		System.out.println(email);
-		System.out.println(MessageRepository.getLookingForJobMessage());
 		WriteNewLetterPage writeNewLetterPage = new WriteNewLetterPage();
 		writeNewLetterPage.typeToAdressField(email);
 		writeNewLetterPage.typeToSubjectField(SUBJECT);

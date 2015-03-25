@@ -1,10 +1,55 @@
 package com.git.capie.TestingFramework.data;
 
 public class MessageRepository {
+	private static char RETURN = ((char) 13);
+	private static char NEWLINE = ((char) 10);
+
 	private MessageRepository() {
 	}
-	
-	public static String getLookingForJobMessage(){
-		return "This message was send automatically using my own TestingFramework (Java, Selenium WebDriver)./nYou can see source of this program on my GitHub profile: TestingFramework, branch: UkrNetCVSpamer./nI think it is cool for junior and few days work =)/nPlease show it somebody who knows Java. /n--------------------------------------------/n/nHello!/nMy name is Olexandr. I've recently finished course \"Quality Assurance and Automated Testing\" at SoftServe IT Academy. I'm looking for a job on Junior Automation QA Engineer position at this moment./nI hope you will be interested in my candidacy./n/nMy GitHub profile: https://github.com/CAPie/nMy CV: https://docs.google.com/file/d/0B3H2xD1BaxWMZWZ2MHdKWG1zSU0/n/nBest regards,/nOlexandr Strilchuk./n​​strilchuk.work@gmail.com";
-		}
+
+	public static String getLookingForJobMessage() {
+		return "This message was send automatically using my own TestingFramework (Java, Selenium WebDriver)."
+				+ RETURN
+				+ NEWLINE
+				+ "You can see source of this program on my GitHub profile: TestingFramework, branch: UkrNetCVSpamer."
+				+ RETURN
+				+ NEWLINE
+				+ "I think it is cool for junior wich spent few days =)"
+				+ RETURN
+				+ NEWLINE
+				+ "Please show it somebody who knows Java. "
+				+ RETURN
+				+ NEWLINE
+				+ "--------------------------------------------"
+				+ RETURN
+				+ NEWLINE
+				+ RETURN
+				+ NEWLINE
+				+ "Hello!"
+				+ RETURN
+				+ NEWLINE
+				+ "My name is Olexandr. I've recently finished course \"Quality Assurance and Automated Testing\" at SoftServe IT Academy. I'm looking for a job on Junior Automation QA Engineer position at this moment."
+				+ RETURN
+				+ NEWLINE
+				+ "I hope you will be interested in my candidacy."
+				+ RETURN
+				+ NEWLINE
+				+ RETURN
+				+ NEWLINE
+				+ "My GitHub profile: https://github.com/CAPie"
+				+ RETURN
+				+ NEWLINE
+				+ "My CV: https://docs.google.com/file/d/0B3H2xD1BaxWMZWZ2MHdKWG1zSU0"
+				+ RETURN
+				+ NEWLINE
+				+ RETURN
+				+ NEWLINE
+				+ "Best regards,"
+				+ RETURN
+				+ NEWLINE
+				+ "Olexandr Strilchuk."
+				+ RETURN
+				+ NEWLINE
+				+ "strilchuk.work@gmail.com" + NEWLINE;
+	}
 }
