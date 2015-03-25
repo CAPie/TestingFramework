@@ -6,6 +6,6 @@ public interface ITextField {
 	String getContent();
 	boolean isDisplayed();
 	boolean isEnabled();
-	void typeText(String text);
+	void sendKeys(String text);
 	void submit();
 }

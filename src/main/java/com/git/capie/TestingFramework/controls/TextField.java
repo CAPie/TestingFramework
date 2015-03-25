@@ -59,7 +59,7 @@ public class TextField implements ITextField {
 		return wrapperOfWebElement.isEnabled();
 	}
 
-	public void typeText(String text) {
+	public void sendKeys(String text) {
 		wrapperOfWebElement.sendKeys(text);
 	}
 
