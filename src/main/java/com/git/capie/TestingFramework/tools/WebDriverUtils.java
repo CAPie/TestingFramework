@@ -169,4 +169,8 @@ public class WebDriverUtils {
 			throw new RuntimeException(ERROR_TAKE_SCREENSHOT);
 		}
 	}
+	
+	public void quit(){
+		getWebDriver().quit();
+	}
 }
