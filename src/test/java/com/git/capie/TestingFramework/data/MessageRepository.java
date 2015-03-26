@@ -14,7 +14,7 @@ public class MessageRepository {
 				+ "You can see source of this program on my GitHub profile: TestingFramework, branch: UkrNetCVSpamer."
 				+ RETURN
 				+ NEWLINE
-				+ "I think it is cool for junior wich spent few days =)"
+				+ "I think it is cool for junior Automation QA which spent few days on programming this framework =)"
 				+ RETURN
 				+ NEWLINE
 				+ "Please show it somebody who knows Java. "
@@ -26,6 +26,8 @@ public class MessageRepository {
 				+ RETURN
 				+ NEWLINE
 				+ "Hello!"
+				+ RETURN
+				+ NEWLINE
 				+ RETURN
 				+ NEWLINE
 				+ "My name is Olexandr. I've recently finished course \"Quality Assurance and Automated Testing\" at SoftServe IT Academy. I'm looking for a job on Junior Automation QA Engineer position at this moment."

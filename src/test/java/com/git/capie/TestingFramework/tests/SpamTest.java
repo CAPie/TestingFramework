@@ -14,9 +14,11 @@ import com.git.capie.TestingFramework.pages.WriteNewLetterPage;
 import com.git.capie.TestingFramework.tools.WebDriverUtils;
 
 public class SpamTest {
-	private WriteNewLetterPage writeNewLetterPage;
+	private String LOGIN = "strilchuk.additional@ukr.net";
+	private String PASSWORD = "******";
 	private String SUBJECT = "Junior Automation QA Enginner";
-
+	private WriteNewLetterPage writeNewLetterPage;
+	
 	@DataProvider(name = "emails")
 	public Object[][] getEmails() {
 		return ListUtils.listToArray(EmailRepository.getCompaniesHREmailesInLviv());
@@ -26,7 +28,7 @@ public class SpamTest {
 	public void login() {
 		WebDriverUtils.get().goToURL(UrlRepository.getUkrNetLoginPageUrl());
 		writeNewLetterPage = new LoginPage().login(
-				"strilchuk.additional@ukr.net", "Selenium")
+				LOGIN, PASSWORD)
 				.goToWriteNewLetter();
 	}
 
