@@ -14,7 +14,7 @@ public class MessageRepository {
 				+ "You can see source of this program on my GitHub profile: TestingFramework, branch: UkrNetCVSpamer."
 				+ RETURN
 				+ NEWLINE
-				+ "I think it is cool for junior Automation QA which spent few days on programming this framework =)"
+				+ "I think it's cool for junior Automation QA which spent few days on programming this framework =)"
 				+ RETURN
 				+ NEWLINE
 				+ "Please show it somebody who knows Java. "

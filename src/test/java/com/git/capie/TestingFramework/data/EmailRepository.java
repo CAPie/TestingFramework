@@ -42,8 +42,8 @@ public class EmailRepository {
 		// TODO SymphonySolutions
 		companiesHREmailesInLviv.add("jobs@symphony-solutions.eu");
 
-		// TODO N-iX
-		// companiesHREmailesInLviv.add("");
+		// N-iX
+		companiesHREmailesInLviv.add("job@n-ix.com");
 
 		// TEAM_International
 		companiesHREmailesInLviv.add("Galyna.Hyrka@teaminternational.com");
@@ -67,7 +67,7 @@ public class EmailRepository {
 		companiesHREmailesInLviv.add("job@binary-studio.com");
 
 		// TODO Perfectial
-		// companiesHREmailesInLviv.add("");
+		companiesHREmailesInLviv.add("job@perfectial.com");
 
 		// GeeksForLess
 		companiesHREmailesInLviv.add("hr@geeksforless.net");
@@ -75,7 +75,7 @@ public class EmailRepository {
 		// UnkurSolutions
 		companiesHREmailesInLviv.add("job@unkur.com");
 
-		// TODO BlinkReaction
+		// TODO BlinkReaction (sent manually)
 		// companiesHREmailesInLviv.add("");
 
 		// TODO HandSome
@@ -156,9 +156,11 @@ public class EmailRepository {
 		// ABTO_Softvare
 		companiesHREmailesInLviv.add("jobs@abtosoftware.com");
 
-		// TODO LimelightNetworks
-		 companiesHREmailesInLviv.add("");
+		// TODO LimelightNetworks (sent manually)
+		companiesHREmailesInLviv.add("");
 
+		// Polontech
+		companiesHREmailesInLviv.add("hello@polontech.biz");
 		return companiesHREmailesInLviv;
 	}
 
