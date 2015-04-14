@@ -15,7 +15,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -29,8 +28,8 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 	 * Enumeration of Browser Types
 	 */
 
-	private static DesiredCapabilities remoteÑapabilities = new DesiredCapabilities();
-	private static WebDriver runDriver = Browsers.FIREFOX.start();
+	private WebDriver runDriver;
+	private static DesiredCapabilities defaultÑapabilities = new DesiredCapabilities();
 
 	public static enum Browsers {
 		CHROME(20, "Chrome") {
@@ -69,7 +68,7 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 		},
 		BROWSER_STACK(30, "BrowserStack") {
 			WebDriver start() {
-				DesiredCapabilities capabilities = remoteÑapabilities;
+				DesiredCapabilities capabilities = defaultÑapabilities;
 				try {
 					return new RemoteWebDriver(new URL(
 							BrowserStackConnectionUrl.getURL()), capabilities);
@@ -141,8 +140,9 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 		return (ISetWebDriverUtils) get();
 	}
 
-	public void setRemoteÑapability(String capabilityName, String value) {
-		remoteÑapabilities.setCapability(capabilityName, value);
+	public void setRemoteÑapability(DesiredCapabilities setÑapabilities) {
+		DesiredCapabilities remoteÑapabilities = setÑapabilities;
+		defaultÑapabilities = remoteÑapabilities;
 	}
 
 	public void setBrowser(Browsers browser) {
@@ -153,7 +153,11 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 		if (driver == null) {
 			synchronized (WebDriverUtils.class) {
 				if (driver == null) {
-					driver = runDriver;
+					if (runDriver == null) {
+						driver = Browsers.FIREFOX.start();
+					} else {
+						driver = runDriver;
+					}
 					driver.manage()
 							.timeouts()
 							.implicitlyWait(getImplicitlyWaitTimeout(),
@@ -195,16 +199,9 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 
 	public void getScreenshot(String fileName) {
 		try {
-			if (driver == Browsers.BROWSER_STACK.start()) {
-				File srcFile = ((TakesScreenshot) new Augmenter()
-						.augment(getWebDriver()))
-						.getScreenshotAs(OutputType.FILE);
-				FileUtils.copyFile(srcFile, new File(fileName));
-			} else {
-				File srcFile = ((TakesScreenshot) getWebDriver())
-						.getScreenshotAs(OutputType.FILE);
-				FileUtils.copyFile(srcFile, new File(fileName));
-			}
+			File srcFile = ((TakesScreenshot) getWebDriver())
+					.getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(srcFile, new File(fileName));
 		} catch (Exception e) {
 			// e.printStackTrace();
 			logger.error(ERROR_TAKE_SCREENSHOT + e.getStackTrace().toString());
@@ -215,5 +212,6 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 
 	public void quit() {
 		getWebDriver().quit();
+		driver = null;
 	}
 }

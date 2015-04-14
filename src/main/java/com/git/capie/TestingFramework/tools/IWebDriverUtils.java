@@ -2,7 +2,7 @@ package com.git.capie.TestingFramework.tools;
 
 import org.openqa.selenium.WebDriver;
 
-interface IWebDriverUtils {
+public interface IWebDriverUtils {
 	WebDriver getWebDriver();
 
 	long getImplicitlyWaitTimeout();
