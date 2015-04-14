@@ -2,6 +2,7 @@ package com.git.capie.TestingFramework.tools;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class VisibilityOfWebElement {
@@ -41,7 +42,14 @@ public class VisibilityOfWebElement {
 		}
 		return webelement;
 	}
-
+	
+	/**
+	 * Expectation for checking that a select is present on the DOM of a
+	 * page and visible.
+	 */
+	Select getVisibleSelect(LocationOfWebElement locationOfWebElement){
+		return new Select(getVisibleWebElement(locationOfWebElement));
+	}
 	
 	/**
 	 * Expectation for checking that an element is present on the DOM of a
@@ -57,7 +65,7 @@ public class VisibilityOfWebElement {
 			throw new RuntimeException(String.format(
 					ERROR_WEB_ELEMENT_NOT_FOUND,
 					locationOfWebElement.getValueOfLocator()));
-		}
+		}		
 		return webelement;
 	}
 }
