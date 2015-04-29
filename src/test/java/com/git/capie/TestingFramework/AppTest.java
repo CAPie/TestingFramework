@@ -9,10 +9,12 @@ import org.testng.annotations.Test;
 
 import com.git.capie.TestingFramework.data.BrowserStackCapabilities;
 import com.git.capie.TestingFramework.data.ListUtils;
+import com.git.capie.TestingFramework.data.UrlRepository;
 import com.git.capie.TestingFramework.tools.WebDriverUtils;
 import com.git.capie.TestingFramework.tools.WebDriverUtils.Browsers;
 
 public class AppTest {
+	
 	@DataProvider
 	// (parallel = true)
 	public Object[][] browserStackCaps() {
@@ -30,10 +32,10 @@ public class AppTest {
 		System.out.println("browserStack done");
 		WebDriverUtils.set().setRemote—apability(desiredCapabilities);
 		System.out.println("Caps done");
-		WebDriverUtils.get().goToURL("https://www.browserstack.com");
+		WebDriverUtils.get().goToURL(UrlRepository.getItwOurWorkUrl());
 		System.out.println("Url done");
 		WebDriverUtils.get().getScreenshot(
-				String.format("D:\\someScreenshot-%s.bmp",
+				String.format("D:\\itwconsulting-our-work+%s.bmp",
 						dateForm.format(ÒurrentTime)));
 		System.out.println("Screenshot done");
 		WebDriverUtils.get().quit();
