@@ -36,16 +36,18 @@ public class WebDriverUtils {
                 return new FirefoxDriver();
             }
         },
+        
         FIREFOX_BY_DEFAULT_PROFILE(20, "Firefox by default profile") {
             WebDriver start() {
                 ProfilesIni profileIni = new ProfilesIni();
                 FirefoxProfile profile = profileIni
                         .getProfile(firefoxDefaultProfile);
-                profile.setAcceptUntrustedCertificates(true);
-                profile.setPreference(APP_UPDATE_ENABLED, false);
+                //profile.setAcceptUntrustedCertificates(true);
+                //profile.setPreference(APP_UPDATE_ENABLED, false);
                 return new FirefoxDriver(profile);
             }
         },
+        
         IE(120, "Internet Explorer") {
             WebDriver start() {
                 DesiredCapabilities capabilities = DesiredCapabilities
@@ -58,15 +60,10 @@ public class WebDriverUtils {
             }
         };
 
-        private static String APP_UPDATE_ENABLED;
-        private static String firefoxDefaultProfile;
+        private static String APP_UPDATE_ENABLED = "app.update.enabled";
+        private static String firefoxDefaultProfile = "defaultProfile";
         private long implicitlyWaitTimeout;
         private String name;
-        
-        static {
-        	APP_UPDATE_ENABLED = "app.update.enabled";
-            firefoxDefaultProfile = "defaultProfile";
-        }
         
         private Browsers(long implicitlyWaitTimeout, String name){
         	this.implicitlyWaitTimeout=implicitlyWaitTimeout;
@@ -93,6 +90,7 @@ public class WebDriverUtils {
 	private static Logger logger = LoggerFactory
 			.getLogger(WebDriverUtils.class);
 	private volatile static WebDriverUtils instanse = null;
+	private static Browsers runBrowser = null;
 	private WebDriver driver;
 	private final long IMPLICITLY_WAIT_TIMEOUT = 20;
 	
@@ -109,15 +107,26 @@ public class WebDriverUtils {
 		return instanse;
 	}
 	
+	public static WebDriverUtils get(Browsers browser){
+		if (instanse == null){
+			synchronized (WebDriverUtils.class) {
+				if (instanse == null){
+					instanse = new WebDriverUtils();
+					runBrowser = browser;
+				}
+			}
+		}
+		return instanse;
+	}
+	
 	WebDriver getWebDriver(){
 		if (driver == null){
 			synchronized (WebDriverUtils.class) {
 				if (driver == null){
-					// TODO Other WebDrivers, Read from pom.xml
-					// driver = Browsers.FIREFOX_ADD_FIREBUG.start();
-					// driver = Browsers.CHROME.start();
-					// driver = Browsers.IE.start();
-					driver = Browsers.FIREFOX.start();
+					if(runBrowser == null){
+						runBrowser = Browsers.FIREFOX;
+					}
+					driver = runBrowser.start();
                     driver.manage()
                             .timeouts()
                             .implicitlyWait(getImplicitlyWaitTimeout(),
@@ -133,7 +142,7 @@ public class WebDriverUtils {
 		return IMPLICITLY_WAIT_TIMEOUT;
 	}
 	
-	public void goToURL(String url){
+	public void goToUrl(String url){
 		getWebDriver().get(url);
 	}
 	
@@ -149,8 +158,12 @@ public class WebDriverUtils {
 		getWebDriver().navigate().refresh();
 	}
 	
-	public String getPageURL(){
+	public String getCurrentUrl(){
 		return getWebDriver().getCurrentUrl();
+	}
+	
+	public String getTitle(){
+		return getWebDriver().getTitle();
 	}
 	
 	public String getPageSource(){
@@ -172,5 +185,6 @@ public class WebDriverUtils {
 	
 	public void quit(){
 		getWebDriver().quit();
+		instanse = null;
 	}
 }
