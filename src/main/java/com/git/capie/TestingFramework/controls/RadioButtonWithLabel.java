@@ -52,7 +52,7 @@ public class RadioButtonWithLabel implements IRadioButtonWithLabel{
 		radioButton.check();
 	}
 
-	public boolean isDisplayed() {
+    public boolean isDisplayed() {
 		return radioButton.isDisplayed();
 	}
 

@@ -1,6 +1,8 @@
 package com.git.capie.TestingFramework.controls;
 
+import com.git.capie.TestingFramework.enums.ElementVisibility;
 import com.git.capie.TestingFramework.tools.LocationOfWebElement;
+import com.git.capie.TestingFramework.tools.VisibilityOfWebElement;
 import com.git.capie.TestingFramework.tools.WrapperOfWebElement;
 
 public class TextField implements ITextField {
@@ -13,30 +15,89 @@ public class TextField implements ITextField {
 		this.locationOfWebElement = locationOfWebElement;
 	}
 
-	public static ITextField getById(String id) {
-		return get(LocationOfWebElement.getLocationById(id));
+	public static ITextField getById(ElementVisibility visibility, String id) {
+		return get(visibility, LocationOfWebElement.getLocationById(id));
 	}
 
-	public static ITextField getByName(String name) {
-		return get(LocationOfWebElement.getLocationByName(name));
+	public static ITextField getByName(ElementVisibility visibility, String name) {
+		return get(visibility, LocationOfWebElement.getLocationByName(name));
 	}
 
-	public static ITextField getByPartialLinkText(String linkText) {
-		return get(LocationOfWebElement.getLocationByPartialLinkText(linkText));
+	public static ITextField getByPartialLinkText(ElementVisibility visibility, String linkText) {
+		return get(visibility, LocationOfWebElement.getLocationByPartialLinkText(linkText));
 	}
 
-	public static ITextField getByXpath(String xpathExpression) {
-		return get(LocationOfWebElement.getLocationByXPath(xpathExpression));
+	public static ITextField getByXpath(ElementVisibility visibility, String xpathExpression) {
+		return get(visibility, LocationOfWebElement.getLocationByXPath(xpathExpression));
 	}
 
-	public static ITextField getByCssSelector(String selector) {
-		return get(LocationOfWebElement.getLocationByCssSelector(selector));
+	public static ITextField getByCssSelector(ElementVisibility visibility, String selector) {
+		return get(visibility, LocationOfWebElement.getLocationByCssSelector(selector));
 	}
 
-	private static ITextField get(LocationOfWebElement locationOfWebElement) {
-		return new TextField(
-				WrapperOfWebElement.getVisibleWebElement(locationOfWebElement),
-				locationOfWebElement);
+	private static ITextField get(ElementVisibility visibility, LocationOfWebElement locationOfWebElement) {
+		if (visibility == ElementVisibility.VISIBLE) {
+			return new TextField(
+					WrapperOfWebElement
+							.getVisibleWebElement(locationOfWebElement),
+					locationOfWebElement);
+		} if (visibility == ElementVisibility.PRESENT) {
+			return new TextField(
+					WrapperOfWebElement
+							.getPresentWebElement(locationOfWebElement),
+					locationOfWebElement);
+		} else {
+            ITextField textField = new TextField(
+					WrapperOfWebElement
+							.getPosibleUexistedWebElement(locationOfWebElement),
+					locationOfWebElement);
+            if (textField == null){
+                textField = new ITextField() {
+                    @Override
+                    public String getAttribute(String attribute) {
+                        return "Element Unexist";
+                    }
+
+                    @Override
+                    public String getText() {
+                        return "Element Unexist";
+                    }
+
+                    @Override
+                    public String getContent() {
+                        return "Element Unexist";
+                    }
+
+                    @Override
+                    public void hover() {
+                    }
+
+                    @Override
+                    public boolean isInvisible() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean isDisplayed() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean isEnabled() {
+                        return false;
+                    }
+
+                    @Override
+                    public void sendKeys(String text) {
+                    }
+
+                    @Override
+                    public void submit() {
+                    }
+                };
+            }
+            return textField;
+		}
 	}
 	
 	public String getAttribute(String attribute){
@@ -49,6 +110,14 @@ public class TextField implements ITextField {
 	
 	public String getContent(){
 		return wrapperOfWebElement.getContent();
+	}
+
+    public void hover() {
+        wrapperOfWebElement.hover();
+    }
+
+    public boolean isInvisible(){
+		return VisibilityOfWebElement.get().isInvisibleWebElement(locationOfWebElement);
 	}
 
 	public boolean isDisplayed() {
