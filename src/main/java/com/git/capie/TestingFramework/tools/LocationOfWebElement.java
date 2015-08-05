@@ -35,6 +35,10 @@ public final class LocationOfWebElement {
 		return new LocationOfWebElement(new By.ByXPath(xpathExpression), xpathExpression);
 	}
 	
+	public static LocationOfWebElement getLocationByTag(String tagName){
+		return new LocationOfWebElement(new By.ByTagName(tagName), tagName);
+	}
+	
 	public By getLocatorBy(){
 		return by;
 	}

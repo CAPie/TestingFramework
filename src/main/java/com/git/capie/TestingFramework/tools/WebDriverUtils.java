@@ -22,15 +22,14 @@ import org.slf4j.LoggerFactory;
 
 import com.git.capie.TestingFramework.data.BrowserStackConnectionUrl;
 
-public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
+public class WebDriverUtils {
 
+	private static Browsers runBrowser = null;
+	private static DesiredCapabilities browserStackCaps;
+	
 	/**
 	 * Enumeration of Browser Types
 	 */
-
-	private WebDriver runDriver;
-	private static DesiredCapabilities defaultÑapabilities = new DesiredCapabilities();
-
 	public static enum Browsers {
 		CHROME(20, "Chrome") {
 			WebDriver start() {
@@ -45,16 +44,18 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 				return new FirefoxDriver();
 			}
 		},
+
 		FIREFOX_BY_DEFAULT_PROFILE(20, "Firefox by default profile") {
 			WebDriver start() {
 				ProfilesIni profileIni = new ProfilesIni();
 				FirefoxProfile profile = profileIni
 						.getProfile(firefoxDefaultProfile);
-				profile.setAcceptUntrustedCertificates(true);
-				profile.setPreference(APP_UPDATE_ENABLED, false);
+				// profile.setAcceptUntrustedCertificates(true);
+				// profile.setPreference(APP_UPDATE_ENABLED, false);
 				return new FirefoxDriver(profile);
 			}
 		},
+
 		IE(120, "Internet Explorer") {
 			WebDriver start() {
 				DesiredCapabilities capabilities = DesiredCapabilities
@@ -66,13 +67,15 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 				return new InternetExplorerDriver(capabilities);
 			}
 		},
+		
 		BROWSER_STACK(30, "BrowserStack") {
 			WebDriver start() {
-				DesiredCapabilities capabilities = defaultÑapabilities;
+				DesiredCapabilities capabilities = browserStackCaps;
 				try {
 					return new RemoteWebDriver(new URL(
 							BrowserStackConnectionUrl.getURL()), capabilities);
 				} catch (MalformedURLException e) {
+					System.out.println(ERROR_BROWSER_STACK_CONNECTION_URL);
 					logger.error(ERROR_BROWSER_STACK_CONNECTION_URL
 							+ e.getStackTrace().toString());
 					// TODO Develop My Exception
@@ -82,17 +85,11 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 			}
 		};
 
-		private static String APP_UPDATE_ENABLED;
-		private static String firefoxDefaultProfile;
-		private static String ERROR_BROWSER_STACK_CONNECTION_URL;
+		// private static String APP_UPDATE_ENABLED = "app.update.enabled";
+		private static String ERROR_BROWSER_STACK_CONNECTION_URL = "Error: BrowserStack connection url";
+		private static String firefoxDefaultProfile = "defaultProfile";
 		private long implicitlyWaitTimeout;
 		private String name;
-
-		static {
-			APP_UPDATE_ENABLED = "app.update.enabled";
-			firefoxDefaultProfile = "defaultProfile";
-			ERROR_BROWSER_STACK_CONNECTION_URL = "BrowserStack connection URL is Malformed.";
-		}
 
 		private Browsers(long implicitlyWaitTimeout, String name) {
 			this.implicitlyWaitTimeout = implicitlyWaitTimeout;
@@ -118,14 +115,14 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 	private final String ERROR_TAKE_SCREENSHOT = "Take Screenshot. I/O Error";
 	private static Logger logger = LoggerFactory
 			.getLogger(WebDriverUtils.class);
-	private volatile static IWebDriverUtils instanse = null;
+	private volatile static WebDriverUtils instanse = null;
 	private WebDriver driver;
 	private final long IMPLICITLY_WAIT_TIMEOUT = 20;
 
 	private WebDriverUtils() {
 	}
 
-	public static IWebDriverUtils get() {
+	public static WebDriverUtils get() {
 		if (instanse == null) {
 			synchronized (WebDriverUtils.class) {
 				if (instanse == null) {
@@ -136,28 +133,39 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 		return instanse;
 	}
 
-	public static ISetWebDriverUtils set() {
-		return (ISetWebDriverUtils) get();
+	public static WebDriverUtils get(Browsers browser) {
+		if (instanse == null) {
+			synchronized (WebDriverUtils.class) {
+				if (instanse == null) {
+					instanse = new WebDriverUtils();
+					runBrowser = browser;
+				}
+			}
+		}
+		return instanse;
+	}
+	
+	public static WebDriverUtils get(DesiredCapabilities capabilities) {
+		if (instanse == null) {
+			synchronized (WebDriverUtils.class) {
+				if (instanse == null) {
+					instanse = new WebDriverUtils();
+					browserStackCaps = capabilities;
+					runBrowser = Browsers.BROWSER_STACK;
+				}
+			}
+		}
+		return instanse;
 	}
 
-	public void setRemoteÑapability(DesiredCapabilities setÑapabilities) {
-		DesiredCapabilities remoteÑapabilities = setÑapabilities;
-		defaultÑapabilities = remoteÑapabilities;
-	}
-
-	public void setBrowser(Browsers browser) {
-		runDriver = browser.start();
-	}
-
-	public WebDriver getWebDriver() {
+	WebDriver getWebDriver() {
 		if (driver == null) {
 			synchronized (WebDriverUtils.class) {
 				if (driver == null) {
-					if (runDriver == null) {
-						driver = Browsers.FIREFOX.start();
-					} else {
-						driver = runDriver;
+					if (runBrowser == null) {
+						runBrowser = Browsers.FIREFOX;
 					}
+					driver = runBrowser.start();
 					driver.manage()
 							.timeouts()
 							.implicitlyWait(getImplicitlyWaitTimeout(),
@@ -173,7 +181,7 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 		return IMPLICITLY_WAIT_TIMEOUT;
 	}
 
-	public void goToURL(String url) {
+	public void goToUrl(String url) {
 		getWebDriver().get(url);
 	}
 
@@ -189,8 +197,12 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 		getWebDriver().navigate().refresh();
 	}
 
-	public String getPageURL() {
+	public String getCurrentUrl() {
 		return getWebDriver().getCurrentUrl();
+	}
+
+	public String getTitle() {
+		return getWebDriver().getTitle();
 	}
 
 	public String getPageSource() {
@@ -212,6 +224,10 @@ public class WebDriverUtils implements ISetWebDriverUtils, IWebDriverUtils {
 
 	public void quit() {
 		getWebDriver().quit();
-		driver = null;
+		instanse = null;
+	}
+	
+	DesiredCapabilities getCapabilities(){
+		return browserStackCaps;
 	}
 }

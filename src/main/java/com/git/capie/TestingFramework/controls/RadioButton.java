@@ -1,67 +1,115 @@
 package com.git.capie.TestingFramework.controls;
 
+import com.git.capie.TestingFramework.enums.ElementVisibility;
 import com.git.capie.TestingFramework.tools.LocationOfWebElement;
 import com.git.capie.TestingFramework.tools.WrapperOfWebElement;
 
 public class RadioButton implements IRadioButton {
-	private WrapperOfWebElement wrapperOfWebElement;
-	private LocationOfWebElement locationOfWebElement;
+    private WrapperOfWebElement wrapperOfWebElement;
+    private LocationOfWebElement locationOfWebElement;
 
-	private RadioButton(WrapperOfWebElement wrapperOfWebElement,
-			LocationOfWebElement locationOfWebElement) {
-	}
+    private RadioButton(WrapperOfWebElement wrapperOfWebElement,
+                        LocationOfWebElement locationOfWebElement) {
+    }
 
-	public static IRadioButton getById(String id) {
-		return get(LocationOfWebElement.getLocationById(id));
-	}
+    public static IRadioButton getById(ElementVisibility visibility, String id) {
+        return get(visibility, LocationOfWebElement.getLocationById(id));
+    }
 
-	public static IRadioButton getByName(String name) {
-		return get(LocationOfWebElement.getLocationByName(name));
-	}
+    public static IRadioButton getByName(ElementVisibility visibility, String name) {
+        return get(visibility, LocationOfWebElement.getLocationByName(name));
+    }
 
-	public static IRadioButton getByCssSelector(String selector) {
-		return get(LocationOfWebElement.getLocationByCssSelector(selector));
-	}
+    public static IRadioButton getByCssSelector(ElementVisibility visibility, String selector) {
+        return get(visibility, LocationOfWebElement.getLocationByCssSelector(selector));
+    }
 
-	public static IRadioButton getByXPath(String xpathExpression) {
-		return get(LocationOfWebElement.getLocationByXPath(xpathExpression));
-	}
+    public static IRadioButton getByXPath(ElementVisibility visibility, String xpathExpression) {
+        return get(visibility, LocationOfWebElement.getLocationByXPath(xpathExpression));
+    }
 
-	private static IRadioButton get(LocationOfWebElement locationOfWebElement) {
-		return new RadioButton(
-				WrapperOfWebElement.getVisibleWebElement(locationOfWebElement),
-				locationOfWebElement);
-	}
+    private static IRadioButton get(ElementVisibility visibility, LocationOfWebElement locationOfWebElement) {
+        if (visibility == ElementVisibility.VISIBLE) {
+            return new RadioButton(
+                    WrapperOfWebElement
+                            .getVisibleWebElement(locationOfWebElement),
+                    locationOfWebElement);
+        }
+        if (visibility == ElementVisibility.PRESENT) {
+            return new RadioButton(
+                    WrapperOfWebElement
+                            .getPresentWebElement(locationOfWebElement),
+                    locationOfWebElement);
+        } else {
+            IRadioButton radioButton = new RadioButton(
+                    WrapperOfWebElement
+                            .getPosibleUexistedWebElement(locationOfWebElement),
+                    locationOfWebElement);
+            if (radioButton == null) {
+                radioButton = new IRadioButton() {
+                    @Override
+                    public String getAttribute(String attribute) {
+                        return "Element Unexist";
+                    }
 
-	public String getAttribute(String attribute) {
-		return wrapperOfWebElement.getAttribute(attribute);
-	}
+                    @Override
+                    public String getName() {
+                        return "Element Unexist";
+                    }
 
-	public String getName() {
-		return wrapperOfWebElement.getName();
-	}
+                    @Override
+                    public boolean isChecked() {
+                        return false;
+                    }
 
-	public boolean isChecked() {
-		return wrapperOfWebElement.isSelectet();
-	}
+                    @Override
+                    public void check() {
+                    }
 
-	public void check() {
-		wrapperOfWebElement.click();
-	}
+                    @Override
+                    public boolean isDisplayed() {
+                        return false;
+                    }
 
-	public boolean isDisplayed() {
-		return wrapperOfWebElement.isDisplayed();
-	}
+                    @Override
+                    public boolean isEnabled() {
+                        return false;
+                    }
+                };
+            }
+            return radioButton;
+        }
+    }
 
-	public boolean isEnabled() {
-		return wrapperOfWebElement.isEnabled();
-	}
+    public String getAttribute(String attribute) {
+        return wrapperOfWebElement.getAttribute(attribute);
+    }
 
-	public WrapperOfWebElement getWrapperOfWebElement() {
-		return wrapperOfWebElement;
-	}
+    public String getName() {
+        return wrapperOfWebElement.getName();
+    }
 
-	public LocationOfWebElement geLocation() {
-		return locationOfWebElement;
-	}
+    public boolean isChecked() {
+        return wrapperOfWebElement.isSelectet();
+    }
+
+    public void check() {
+        wrapperOfWebElement.click();
+    }
+
+    public boolean isDisplayed() {
+        return wrapperOfWebElement.isDisplayed();
+    }
+
+    public boolean isEnabled() {
+        return wrapperOfWebElement.isEnabled();
+    }
+
+    public WrapperOfWebElement getWrapperOfWebElement() {
+        return wrapperOfWebElement;
+    }
+
+    public LocationOfWebElement geLocation() {
+        return locationOfWebElement;
+    }
 }
