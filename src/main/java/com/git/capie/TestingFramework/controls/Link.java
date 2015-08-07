@@ -1,9 +1,11 @@
 package com.git.capie.TestingFramework.controls;
 
+import com.git.capie.TestingFramework.enums.ElementVisibility;
 import com.git.capie.TestingFramework.tools.LocationOfWebElement;
+import com.git.capie.TestingFramework.tools.VisibilityOfWebElement;
 import com.git.capie.TestingFramework.tools.WrapperOfWebElement;
 
-public class Link implements ILink {	
+public class Link implements ILink {
 	private WrapperOfWebElement wrapperOfWebElement;
 	private LocationOfWebElement locationOfWebElement;
 
@@ -13,30 +15,54 @@ public class Link implements ILink {
 		this.locationOfWebElement = locationOfWebElement;
 	}
 
-	public static ILink getById(String id) {
-		return get(LocationOfWebElement.getLocationById(id));
+	public static ILink getById(ElementVisibility visibility, String id) {
+		return get(visibility, LocationOfWebElement.getLocationById(id));
 	}
 
-	public static ILink getByName(String name) {
-		return get(LocationOfWebElement.getLocationByName(name));
+	public static ILink getByName(ElementVisibility visibility, String name) {
+		return get(visibility, LocationOfWebElement.getLocationByName(name));
 	}
 
-	public static ILink getByPartialLinkText(String linkText) {
-		return get(LocationOfWebElement.getLocationByPartialLinkText(linkText));
+	public static ILink getByPartialLinkText(ElementVisibility visibility,
+			String linkText) {
+		return get(visibility,
+				LocationOfWebElement.getLocationByPartialLinkText(linkText));
 	}
 
-	public static ILink getByXpath(String xpathExpression) {
-		return get(LocationOfWebElement.getLocationByXPath(xpathExpression));
+	public static ILink getByXpath(ElementVisibility visibility,
+			String xpathExpression) {
+		return get(visibility,
+				LocationOfWebElement.getLocationByXPath(xpathExpression));
 	}
 
-	public static ILink getByCssSelector(String selector) {
-		return get(LocationOfWebElement.getLocationByCssSelector(selector));
+	public static ILink getByCssSelector(ElementVisibility visibility,
+			String selector) {
+		return get(visibility,
+				LocationOfWebElement.getLocationByCssSelector(selector));
 	}
 
-	private static ILink get(LocationOfWebElement locationOfWebElement) {
-		return new Link(
-				WrapperOfWebElement.getVisibleWebElement(locationOfWebElement),
-				locationOfWebElement);
+	private static ILink get(ElementVisibility visibility,
+			LocationOfWebElement locationOfWebElement) {
+		if (visibility == ElementVisibility.VISIBLE) {
+			return new Link(
+					WrapperOfWebElement
+							.getVisibleWebElement(locationOfWebElement),
+					locationOfWebElement);
+		} if (visibility == ElementVisibility.PRESENT){
+			return new Link(
+					WrapperOfWebElement
+							.getPresentWebElement(locationOfWebElement),
+					locationOfWebElement);
+		} else {
+			ILink link = new Link(
+					WrapperOfWebElement
+							.getPosibleUexistedWebElement(locationOfWebElement),
+					locationOfWebElement);
+            if (link == null){
+                link = VoidControlStub.get().toILink();
+            }
+            return link;
+		}
 	}
 
 	public String getAttribute(String attribute) {
@@ -55,22 +81,36 @@ public class Link implements ILink {
 		return wrapperOfWebElement.getUrl();
 	}
 
-	public void click() {
+	public boolean isInvisible() {
+		return VisibilityOfWebElement.get().isInvisibleWebElement(
+				locationOfWebElement);
 	}
 
-	public boolean isDisplayed() {
+	public void click() {
+        wrapperOfWebElement.click();
+	}
+
+    public void doubleClick() {
+        wrapperOfWebElement.doubleClick();
+    }
+
+    public void hover() {
+        wrapperOfWebElement.hover();
+    }
+
+    public boolean isDisplayed() {
 		return wrapperOfWebElement.isDisplayed();
 	}
 
 	public boolean isEnabled() {
 		return wrapperOfWebElement.isEnabled();
 	}
-	
-	public WrapperOfWebElement getWrapperOfWebElement(){
+
+	public WrapperOfWebElement getWrapperOfWebElement() {
 		return wrapperOfWebElement;
 	}
-	
-	public LocationOfWebElement getLocation(){
+
+	public LocationOfWebElement getLocation() {
 		return locationOfWebElement;
 	}
 }

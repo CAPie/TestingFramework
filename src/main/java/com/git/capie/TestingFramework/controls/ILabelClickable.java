@@ -1,15 +1,21 @@
 package com.git.capie.TestingFramework.controls;
 
 public interface ILabelClickable {
-	String getAttribute(String attribute);
+    String getAttribute(String attribute);
 
-	String getText();
+    String getText();
 
-	String getContent();
+    String getContent();
 
-	void click();
+    boolean isInvisible();
 
-	boolean isDisplayed();
+    void click();
 
-	boolean isEnabled();
+    void doubleClick();
+
+    void hover();
+
+    boolean isDisplayed();
+
+    boolean isEnabled();
 }

@@ -6,8 +6,12 @@ public interface ILabel {
 	String getText();
 
 	String getContent();
+	
+	ILabelClickable makeClickable();
 
-	ILabelClickable makeLabelClickable();
+    void hover();
+	
+	boolean isInvisible();
 
 	boolean isDisplayed();
 
