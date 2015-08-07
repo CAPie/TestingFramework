@@ -10,7 +10,7 @@ import com.git.capie.TestingFramework.controls.ITextField;
 import com.git.capie.TestingFramework.controls.Label;
 import com.git.capie.TestingFramework.controls.Link;
 import com.git.capie.TestingFramework.controls.TextField;
-
+import com.git.capie.TestingFramework.enums.ElementVisibility;
 
 public class LoginPage {
 	private class LoginPageUIMap {
@@ -21,25 +21,26 @@ public class LoginPage {
 		public final ILink forgotPassword;
 		public final ILink registration;
 		public final IButton loginButton;
-		
+
 		public LoginPageUIMap() {
-			this.UkrNetImg = Link.getByCssSelector(".logo");
-			this.loginField = TextField.getById("login");
-			this.passwdField= TextField.getById("password");
-			this.publicPlaceChBox = CheckBoxWithLabel.get(CheckBox.getByXpath(".//*[@id='login-form']/label/input"), Label.getByXpath(".//*[@id='login-form']/label/span").makeLabelClickable());
-			this.forgotPassword = Link.getById("recovery-link");
-			this.registration = Link.getById("signup-link");
-			this.loginButton = Button.getByXpath(".//*[@id='login-form']/div[3]/button");
+			this.UkrNetImg = Link.getByCssSelector(ElementVisibility.VISIBLE, ".logo");
+			this.loginField = TextField.getById(ElementVisibility.VISIBLE, "login");
+			this.passwdField = TextField.getById(ElementVisibility.VISIBLE, "password");
+			this.publicPlaceChBox = CheckBoxWithLabel.get(CheckBox.getByXpath(ElementVisibility.VISIBLE, ".//*[@id='login-form']/label/input"),
+					Label.getByXpath(ElementVisibility.VISIBLE, ".//*[@id='login-form']/label/span").makeClickable());
+			this.forgotPassword = Link.getById(ElementVisibility.VISIBLE, "recovery-link");
+			this.registration = Link.getById(ElementVisibility.VISIBLE, "signup-link");
+			this.loginButton = Button.getByXpath(ElementVisibility.VISIBLE, ".//*[@id='login-form']/div[3]/button");
 		}
 	}
-	
+
 	private LoginPageUIMap controls;
-	
-	public LoginPage(){
+
+	public LoginPage() {
 		this.controls = new LoginPageUIMap();
 	}
-	
-	public IncomingLettersPage login(String login, String password){
+
+	public IncomingLettersPage login(String login, String password) {
 		controls.loginField.sendKeys(login);
 		controls.passwdField.sendKeys(password);
 		controls.loginButton.click();

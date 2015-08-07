@@ -12,34 +12,32 @@ import com.git.capie.TestingFramework.pages.AfterSendLetterPage;
 import com.git.capie.TestingFramework.pages.LoginPage;
 import com.git.capie.TestingFramework.pages.WriteNewLetterPage;
 import com.git.capie.TestingFramework.tools.WebDriverUtils;
+import com.git.capie.TestingFramework.tools.WebDriverUtils.Browsers;
+
 
 public class SpamTest {
 	private String LOGIN = "strilchuk.additional@ukr.net";
-	private String PASSWORD = "******";
-	private String SUBJECT = "Junior Automation QA Enginner";
+	private String PASSWORD = "password";
+	private String SUBJECT = "Automation QA Enginner";
 	private WriteNewLetterPage writeNewLetterPage;
-	
+
 	@DataProvider(name = "emails")
 	public Object[][] getEmails() {
-		return ListUtils.listToArray(EmailRepository.getCompaniesHREmailesInLviv());
+		return ListUtils.listToArray(EmailRepository.getMyEmail());
 	}
 
 	@BeforeClass
 	public void login() {
-		WebDriverUtils.get().goToURL(UrlRepository.getUkrNetLoginPageUrl());
-		writeNewLetterPage = new LoginPage().login(
-				LOGIN, PASSWORD)
-				.goToWriteNewLetter();
+		WebDriverUtils.get(Browsers.FIREFOX).goToUrl(UrlRepository.getUkrNetLoginPageUrl());
+		writeNewLetterPage = new LoginPage().login(LOGIN, PASSWORD).goToWriteNewLetter();
 	}
 
 	@Test(dataProvider = "emails")
 	public void sendEMail(String email) {
 		writeNewLetterPage.typeToAdressField(email);
 		writeNewLetterPage.typeToSubjectField(SUBJECT);
-		writeNewLetterPage.typeMessage(MessageRepository
-				.getLookingForJobMessage());
-		AfterSendLetterPage afterSendLetterPage = writeNewLetterPage
-				.sendMessage();
+		writeNewLetterPage.typeMessage(MessageRepository.getLookingForJobMessage());
+		AfterSendLetterPage afterSendLetterPage = writeNewLetterPage.sendMessage();
 		writeNewLetterPage = afterSendLetterPage.goToWriteNewLetter();
 	}
 }

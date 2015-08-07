@@ -46,36 +46,7 @@ public class RadioButton implements IRadioButton {
                             .getPosibleUexistedWebElement(locationOfWebElement),
                     locationOfWebElement);
             if (radioButton == null) {
-                radioButton = new IRadioButton() {
-                    @Override
-                    public String getAttribute(String attribute) {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public String getName() {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public boolean isChecked() {
-                        return false;
-                    }
-
-                    @Override
-                    public void check() {
-                    }
-
-                    @Override
-                    public boolean isDisplayed() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean isEnabled() {
-                        return false;
-                    }
-                };
+                radioButton = VoidControlStub.get().toIRadioButton();
             }
             return radioButton;
         }

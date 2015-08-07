@@ -11,15 +11,8 @@ public class AppTest {
 	String GOOGLE_TITLE= "google";
 
 	@Test
-	public void testDefault() {
-		WebDriverUtils.get().goToUrl(GOOGLE_URL);
-		String actual = WebDriverUtils.get().getTitle().toLowerCase();
-		WebDriverUtils.get().quit();
-		Assert.assertEquals(actual, GOOGLE_TITLE);
-	}
-
-	@Test
 	public void testChrome() {
+		System.out.println("Chrome test");
 		WebDriverUtils.get(Browsers.CHROME).goToUrl(GOOGLE_URL);
 		String actual = WebDriverUtils.get().getTitle().toLowerCase();
 		WebDriverUtils.get().quit();
@@ -28,6 +21,7 @@ public class AppTest {
 
 	@Test
 	public void testFF() {
+		System.out.println("FF test");
 		WebDriverUtils.get(Browsers.FIREFOX).goToUrl(GOOGLE_URL);
 		String actual = WebDriverUtils.get().getTitle().toLowerCase();
 		WebDriverUtils.get().quit();
@@ -36,6 +30,7 @@ public class AppTest {
 
 	@Test
 	public void testFFDef() {
+		System.out.println("DefaultFF test");
 		WebDriverUtils.get(Browsers.FIREFOX_BY_DEFAULT_PROFILE).goToUrl(
                 GOOGLE_URL);
 		String actual = WebDriverUtils.get().getTitle().toLowerCase();
@@ -45,6 +40,7 @@ public class AppTest {
 
 	@Test
 	public void testIE() {
+		System.out.println("IE test");
 		WebDriverUtils.get(Browsers.IE).goToUrl(GOOGLE_URL);
 		String actual = WebDriverUtils.get().getTitle().toLowerCase();
 		WebDriverUtils.get().quit();

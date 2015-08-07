@@ -6,6 +6,7 @@ import com.git.capie.TestingFramework.controls.ILink;
 import com.git.capie.TestingFramework.controls.ITextField;
 import com.git.capie.TestingFramework.controls.Link;
 import com.git.capie.TestingFramework.controls.TextField;
+import com.git.capie.TestingFramework.enums.ElementVisibility;
 
 public class WriteNewLetterPage extends BaseLeftFrame{
 	private class WriteNewLetterPageUIMap{
@@ -18,13 +19,13 @@ public class WriteNewLetterPage extends BaseLeftFrame{
 		public final ITextField messageField;
 		
 		public WriteNewLetterPageUIMap(){
-			this.sendMessage = Button.getByXpath(".//*[@id='screens']/div/div[1]/div/button");
-			this.dismisMessage = Link.getByXpath(".//*[@id='screens']/div/div[1]/div/a[1]");
-			this.addresField = TextField.getByName("toInput");
-			this.subjectField = TextField.getByName("subject");
+			this.sendMessage = Button.getByXpath(ElementVisibility.VISIBLE, ".//*[@id='screens']/div/div[1]/div/button");
+			this.dismisMessage = Link.getByXpath(ElementVisibility.VISIBLE, ".//*[@id='screens']/div/div[1]/div/a[1]");
+			this.addresField = TextField.getByName(ElementVisibility.VISIBLE, "toInput");
+			this.subjectField = TextField.getByName(ElementVisibility.VISIBLE, "subject");
 			//this.attachFile = Button.getByXpath(".//*[@id='screens']/div/div[2]/section[1]/div[1]/div[2]/input[2]");
 			// this.attachFileFromEDisk;
-			this.messageField = TextField.getByXpath(".//*[@id='screens']/div/div[2]/section[3]/div/div[3]");
+			this.messageField = TextField.getByXpath(ElementVisibility.VISIBLE, ".//*[@id='screens']/div/div[2]/section[3]/div/div[3]");
 		}
 	}
 	

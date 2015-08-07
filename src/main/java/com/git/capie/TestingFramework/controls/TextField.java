@@ -52,49 +52,7 @@ public class TextField implements ITextField {
 							.getPosibleUexistedWebElement(locationOfWebElement),
 					locationOfWebElement);
             if (textField == null){
-                textField = new ITextField() {
-                    @Override
-                    public String getAttribute(String attribute) {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public String getText() {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public String getContent() {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public void hover() {
-                    }
-
-                    @Override
-                    public boolean isInvisible() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean isDisplayed() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean isEnabled() {
-                        return false;
-                    }
-
-                    @Override
-                    public void sendKeys(String text) {
-                    }
-
-                    @Override
-                    public void submit() {
-                    }
-                };
+                textField = VoidControlStub.get().toITextField();
             }
             return textField;
 		}

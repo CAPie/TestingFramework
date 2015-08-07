@@ -8,4 +8,5 @@ public interface IControl {
 	public ILabelClickable toILabelClickable();
 	
 	public ILink toILink();
+
 }

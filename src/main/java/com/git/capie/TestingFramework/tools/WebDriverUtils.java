@@ -1,10 +1,6 @@
 package com.git.capie.TestingFramework.tools;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
+import com.git.capie.TestingFramework.data.BrowserStackConnectionUrl;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -17,26 +13,28 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.git.capie.TestingFramework.data.BrowserStackConnectionUrl;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 public class WebDriverUtils {
 
 	private static Browsers runBrowser = null;
 	private static DesiredCapabilities browserStackCaps;
-	
+
 	/**
 	 * Enumeration of Browser Types
 	 */
 	public static enum Browsers {
 		CHROME(20, "Chrome") {
 			WebDriver start() {
-				ChromeOptions options = new ChromeOptions();
-				options.addArguments("--ignore-certificate-errors");
-				options.addArguments("--start-maximized");
-				return new ChromeDriver(options);
+				// ChromeOptions options = new ChromeOptions();
+				// options.addArguments("--ignore-certificate-errors");
+				// options.addArguments("--start-maximized");
+				// return new ChromeDriver(options);
+				return new ChromeDriver();
 			}
 		},
 		FIREFOX(20, "Firefox") {
@@ -48,8 +46,7 @@ public class WebDriverUtils {
 		FIREFOX_BY_DEFAULT_PROFILE(20, "Firefox by default profile") {
 			WebDriver start() {
 				ProfilesIni profileIni = new ProfilesIni();
-				FirefoxProfile profile = profileIni
-						.getProfile(firefoxDefaultProfile);
+				FirefoxProfile profile = profileIni.getProfile(firefoxDefaultProfile);
 				// profile.setAcceptUntrustedCertificates(true);
 				// profile.setPreference(APP_UPDATE_ENABLED, false);
 				return new FirefoxDriver(profile);
@@ -58,29 +55,26 @@ public class WebDriverUtils {
 
 		IE(120, "Internet Explorer") {
 			WebDriver start() {
-				DesiredCapabilities capabilities = DesiredCapabilities
-						.internetExplorer();
-				capabilities
-						.setCapability(
-								InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
-								true);
+				DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+				capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
+						true);
 				return new InternetExplorerDriver(capabilities);
 			}
 		},
-		
+
 		BROWSER_STACK(30, "BrowserStack") {
 			WebDriver start() {
 				DesiredCapabilities capabilities = browserStackCaps;
 				try {
-					return new RemoteWebDriver(new URL(
-							BrowserStackConnectionUrl.getURL()), capabilities);
+					return new RemoteWebDriver(new URL(BrowserStackConnectionUrl.getURL()), capabilities);
 				} catch (MalformedURLException e) {
 					System.out.println(ERROR_BROWSER_STACK_CONNECTION_URL);
-					logger.error(ERROR_BROWSER_STACK_CONNECTION_URL
-							+ e.getStackTrace().toString());
+					/*
+					 * logger.error(ERROR_BROWSER_STACK_CONNECTION_URL +
+					 * e.getStackTrace().toString());
+					 */
 					// TODO Develop My Exception
-					throw new RuntimeException(
-							ERROR_BROWSER_STACK_CONNECTION_URL);
+					throw new RuntimeException(ERROR_BROWSER_STACK_CONNECTION_URL);
 				}
 			}
 		};
@@ -113,8 +107,10 @@ public class WebDriverUtils {
 	}
 
 	private final String ERROR_TAKE_SCREENSHOT = "Take Screenshot. I/O Error";
-	private static Logger logger = LoggerFactory
-			.getLogger(WebDriverUtils.class);
+	/*
+	 * private static Logger logger = LoggerFactory
+	 * .getLogger(WebDriverUtils.class);
+	 */
 	private volatile static WebDriverUtils instanse = null;
 	private WebDriver driver;
 	private final long IMPLICITLY_WAIT_TIMEOUT = 20;
@@ -144,7 +140,7 @@ public class WebDriverUtils {
 		}
 		return instanse;
 	}
-	
+
 	public static WebDriverUtils get(DesiredCapabilities capabilities) {
 		if (instanse == null) {
 			synchronized (WebDriverUtils.class) {
@@ -166,10 +162,7 @@ public class WebDriverUtils {
 						runBrowser = Browsers.FIREFOX;
 					}
 					driver = runBrowser.start();
-					driver.manage()
-							.timeouts()
-							.implicitlyWait(getImplicitlyWaitTimeout(),
-									TimeUnit.SECONDS);
+					driver.manage().timeouts().implicitlyWait(getImplicitlyWaitTimeout(), TimeUnit.SECONDS);
 					driver.manage().window().maximize();
 				}
 			}
@@ -211,12 +204,12 @@ public class WebDriverUtils {
 
 	public void getScreenshot(String fileName) {
 		try {
-			File srcFile = ((TakesScreenshot) getWebDriver())
-					.getScreenshotAs(OutputType.FILE);
+			File srcFile = ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.FILE);
 			FileUtils.copyFile(srcFile, new File(fileName));
 		} catch (Exception e) {
 			// e.printStackTrace();
-			logger.error(ERROR_TAKE_SCREENSHOT + e.getStackTrace().toString());
+			// logger.error(ERROR_TAKE_SCREENSHOT +
+			// e.getStackTrace().toString());
 			// TODO Develop My Exception
 			throw new RuntimeException(ERROR_TAKE_SCREENSHOT);
 		}
@@ -226,8 +219,8 @@ public class WebDriverUtils {
 		getWebDriver().quit();
 		instanse = null;
 	}
-	
-	DesiredCapabilities getCapabilities(){
+
+	DesiredCapabilities getCapabilities() {
 		return browserStackCaps;
 	}
 }

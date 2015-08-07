@@ -5,7 +5,7 @@ import com.git.capie.TestingFramework.tools.LocationOfWebElement;
 import com.git.capie.TestingFramework.tools.VisibilityOfWebElement;
 import com.git.capie.TestingFramework.tools.WrapperOfWebElement;
 
-public class Label implements ILabel {
+public class Label implements ILabel, ILabelClickable {
 	private WrapperOfWebElement wrapperOfWebElement;
 	private LocationOfWebElement locationOfWebElement;
 
@@ -43,6 +43,10 @@ public class Label implements ILabel {
 				LocationOfWebElement.getLocationByPartialLinkText(linkText));
 	}
 
+    public ILabelClickable makeClickable() {
+        return this;
+    }
+
 	private static ILabel get(ElementVisibility visibility,
 			LocationOfWebElement locationOfWebElement) {
 		if (visibility == ElementVisibility.VISIBLE) {
@@ -62,92 +66,7 @@ public class Label implements ILabel {
 							.getPosibleUexistedWebElement(locationOfWebElement),
 					locationOfWebElement);
             if (label == null){
-                label = new ILabel() {
-                    @Override
-                    public String getAttribute(String attribute) {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public String getText() {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public String getContent() {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public ILabelClickable makeLabelClickable() {
-                        return new ILabelClickable() {
-                            @Override
-                            public String getAttribute(String attribute) {
-                                return "Element Unexist";
-                            }
-
-                            @Override
-                            public String getText() {
-                                return null;
-                            }
-
-                            @Override
-                            public String getContent() {
-                                return "Element Unexist";
-                            }
-
-                            @Override
-                            public boolean isInvisible() {
-                                return false;
-                            }
-
-                            @Override
-                            public void click() {
-
-                            }
-
-                            @Override
-                            public void doubleClick() {
-
-                            }
-
-                            @Override
-                            public void hover() {
-
-                            }
-
-                            @Override
-                            public boolean isDisplayed() {
-                                return false;
-                            }
-
-                            @Override
-                            public boolean isEnabled() {
-                                return false;
-                            }
-                        };
-                    }
-
-                    @Override
-                    public void hover() {
-
-                    }
-
-                    @Override
-                    public boolean isInvisible() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean isDisplayed() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean isEnabled() {
-                        return false;
-                    }
-                };
+                label = VoidControlStub.get().toILabel();
             }
             return label;
 		}
@@ -170,11 +89,15 @@ public class Label implements ILabel {
 				locationOfWebElement);
 	}
 
-	public ILabelClickable makeLabelClickable() {
-		return LabelClickable.makeLabelClicable(this);
-	}
+    public void click() {
+        wrapperOfWebElement.click();
+    }
 
-	public void hover() {
+    public void doubleClick() {
+        wrapperOfWebElement.doubleClick();
+    }
+
+    public void hover() {
 		wrapperOfWebElement.hover();
 	}
 

@@ -68,11 +68,11 @@ public class CheckBoxWithLabel implements ICheckBoxWithLabel{
 		return labelClickable.getText();
 	}	
 	
-	public CheckBox getCheckBox(){
-		return (CheckBox)checkBox;
+	public ICheckBox getCheckBox(){
+		return checkBox;
 	}
 	
-	public LabelClickable getLabelClickable(){
-		return (LabelClickable)labelClickable;
+	public ILabelClickable getLabelClickable(){
+		return labelClickable;
 	}
 }

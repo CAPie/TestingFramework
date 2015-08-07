@@ -6,141 +6,88 @@ import com.git.capie.TestingFramework.tools.VisibilityOfWebElement;
 import com.git.capie.TestingFramework.tools.WrapperOfWebElement;
 
 public class Button implements IButton {
-    private WrapperOfWebElement wrapperOfWebElement;
-    private LocationOfWebElement locationOfWebElement;
+	private WrapperOfWebElement wrapperOfWebElement;
+	private LocationOfWebElement locationOfWebElement;
 
-    private Button(WrapperOfWebElement wrapperOfWebElement,
-                   LocationOfWebElement locationOfWebElement) {
-        this.wrapperOfWebElement = wrapperOfWebElement;
-        this.locationOfWebElement = locationOfWebElement;
-    }
+	private Button(WrapperOfWebElement wrapperOfWebElement, LocationOfWebElement locationOfWebElement) {
+		this.wrapperOfWebElement = wrapperOfWebElement;
+		this.locationOfWebElement = locationOfWebElement;
+	}
 
-    public static IButton getById(ElementVisibility visibility, String id) {
-        return get(visibility, LocationOfWebElement.getLocationById(id));
-    }
+	public static IButton getById(ElementVisibility visibility, String id) {
+		return get(visibility, LocationOfWebElement.getLocationById(id));
+	}
 
-    public static IButton getByName(ElementVisibility visibility, String name) {
-        return get(visibility, LocationOfWebElement.getLocationByName(name));
-    }
+	public static IButton getByName(ElementVisibility visibility, String name) {
+		return get(visibility, LocationOfWebElement.getLocationByName(name));
+	}
 
-    public static IButton getByXpath(ElementVisibility visibility,
-                                     String xpathExpression) {
-        return get(visibility,
-                LocationOfWebElement.getLocationByXPath(xpathExpression));
-    }
+	public static IButton getByXpath(ElementVisibility visibility, String xpathExpression) {
+		return get(visibility, LocationOfWebElement.getLocationByXPath(xpathExpression));
+	}
 
-    public static IButton getByCssSelector(ElementVisibility visibility,
-                                           String selector) {
-        return get(visibility,
-                LocationOfWebElement.getLocationByCssSelector(selector));
-    }
+	public static IButton getByCssSelector(ElementVisibility visibility, String selector) {
+		return get(visibility, LocationOfWebElement.getLocationByCssSelector(selector));
+	}
 
-    private static IButton get(ElementVisibility visibility,
-                               LocationOfWebElement locationOfWebElement) {
-        if (visibility == ElementVisibility.VISIBLE) {
-            return new Button(
-                    WrapperOfWebElement
-                            .getVisibleWebElement(locationOfWebElement),
-                    locationOfWebElement);
-        }
-        if (visibility == ElementVisibility.PRESENT) {
-            return new Button(
-                    WrapperOfWebElement
-                            .getPresentWebElement(locationOfWebElement),
-                    locationOfWebElement);
-        } else {
-            IButton button = new Button(
-                    WrapperOfWebElement
-                            .getPosibleUexistedWebElement(locationOfWebElement),
-                    locationOfWebElement);
-            if (button == null) {
+	private static IButton get(ElementVisibility visibility, LocationOfWebElement locationOfWebElement) {
+		if (visibility == ElementVisibility.VISIBLE) {
+			return new Button(WrapperOfWebElement.getVisibleWebElement(locationOfWebElement), locationOfWebElement);
+		}
+		if (visibility == ElementVisibility.PRESENT) {
+			return new Button(WrapperOfWebElement.getPresentWebElement(locationOfWebElement), locationOfWebElement);
+		} else {
+			IButton button = new Button(WrapperOfWebElement.getPosibleUexistedWebElement(locationOfWebElement),
+					locationOfWebElement);
+			if (button == null) {
 
-                button = new IButton() {
+				button = VoidControlStub.get().toIButton();
+			}
+			return button;
+		}
+	}
 
-                    @Override
-                    public String getAttribute(String attribute) {
-                        return "Element Unexist";
-                    }
+	public String getAttribute(String attribute) {
+		return wrapperOfWebElement.getAttribute(attribute);
+	}
 
-                    @Override
-                    public String getContent() {
-                        return "Element Unexist";
-                    }
+	public String getContent() {
+		return wrapperOfWebElement.getContent();
+	}
 
-                    @Override
-                    public String getText() {
-                        return "Element Unexist";
-                    }
+	public String getText() {
+		return wrapperOfWebElement.getText();
+	}
 
-                    @Override
-                    public void click() {
-                    }
+	public boolean isInvisible() {
+		return VisibilityOfWebElement.get().isInvisibleWebElement(locationOfWebElement);
+	}
 
-                    @Override
-                    public void doubleClick() {
-                    }
+	public void click() {
+		wrapperOfWebElement.click();
+	}
 
-                    @Override
-                    public void hover() {
-                    }
+	public void doubleClick() {
+		wrapperOfWebElement.doubleClick();
+	}
 
-                    @Override
-                    public boolean isDisplayed() {
-                        return false;
-                    }
+	public void hover() {
+		wrapperOfWebElement.hover();
+	}
 
-                    @Override
-                    public boolean isEnabled() {
-                        return false;
-                    }
-                };
-            }
-            return  button;
-        }
-    }
+	public boolean isDisplayed() {
+		return wrapperOfWebElement.isDisplayed();
+	}
 
-    public String getAttribute(String attribute) {
-        return wrapperOfWebElement.getAttribute(attribute);
-    }
+	public boolean isEnabled() {
+		return wrapperOfWebElement.isEnabled();
+	}
 
-    public String getContent() {
-        return wrapperOfWebElement.getContent();
-    }
+	public WrapperOfWebElement getWrapperOfWebElement() {
+		return wrapperOfWebElement;
+	}
 
-    public String getText() {
-        return wrapperOfWebElement.getText();
-    }
-
-    public boolean isInvisible() {
-        return VisibilityOfWebElement.get().isInvisibleWebElement(
-                locationOfWebElement);
-    }
-
-    public void click() {
-        wrapperOfWebElement.click();
-    }
-
-    public void doubleClick() {
-        wrapperOfWebElement.doubleClick();
-    }
-
-    public void hover() {
-        wrapperOfWebElement.hover();
-    }
-
-    public boolean isDisplayed() {
-        return wrapperOfWebElement.isDisplayed();
-    }
-
-    public boolean isEnabled() {
-        return wrapperOfWebElement.isEnabled();
-    }
-
-    public WrapperOfWebElement getWrapperOfWebElement() {
-        return wrapperOfWebElement;
-    }
-
-    public LocationOfWebElement getLocation() {
-        return locationOfWebElement;
-    }
+	public LocationOfWebElement getLocation() {
+		return locationOfWebElement;
+	}
 }

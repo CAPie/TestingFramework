@@ -7,7 +7,7 @@ public interface ILabel {
 
 	String getContent();
 	
-	ILabelClickable makeLabelClickable();
+	ILabelClickable makeClickable();
 
     void hover();
 	

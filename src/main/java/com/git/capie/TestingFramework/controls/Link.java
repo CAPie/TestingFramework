@@ -59,55 +59,7 @@ public class Link implements ILink {
 							.getPosibleUexistedWebElement(locationOfWebElement),
 					locationOfWebElement);
             if (link == null){
-                link = new ILink(){
-
-                    @Override
-                    public String getAttribute(String attribute) {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public String getContent() {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public String getText() {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public String getUrl() {
-                        return "Element Unexist";
-                    }
-
-                    @Override
-                    public boolean isInvisible() {
-                        return false;
-                    }
-
-                    @Override
-                    public void click() {
-                    }
-
-                    @Override
-                    public void doubleClick() {
-                    }
-
-                    @Override
-                    public void hover() {
-                    }
-
-                    @Override
-                    public boolean isDisplayed() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean isEnabled() {
-                        return false;
-                    }
-                };
+                link = VoidControlStub.get().toILink();
             }
             return link;
 		}

@@ -48,7 +48,7 @@ public class ListOfElements implements IListOfElements {
 		return listOfElements;
 	}
 	
-	public IControl getListOfElements(int number) {
+	public IControl getElement(int number) {
 		return Control.get(listOfWebElements.get(number));
 	}
 

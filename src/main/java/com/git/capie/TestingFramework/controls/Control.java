@@ -40,6 +40,7 @@ public class Control implements IControl, IButton, ILabel, ILabelClickable, ILin
     public void hover() {
         wrapperOfWebElement.hover();
     }
+
     public String getAttribute(String attribute) {
         return wrapperOfWebElement.getAttribute(attribute);
     }
@@ -68,7 +69,8 @@ public class Control implements IControl, IButton, ILabel, ILabelClickable, ILin
         return wrapperOfWebElement.getUrl();
     }
 
-    public ILabelClickable makeLabelClickable() {
+    @Deprecated
+    public ILabelClickable makeClickable() {
         return this;
     }
 

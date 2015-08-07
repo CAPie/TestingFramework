@@ -46,24 +46,7 @@ public class DropDownList implements IDropDownList {
 					WrapperOfSelect
 							.getPosibleUexistedSelect(locationOfWebElement));
             if(dropDownList == null){
-                dropDownList = new IDropDownList() {
-                    @Override
-                    public void selectByIndex(int index) {
-                    }
-
-                    @Override
-                    public void selectByText(String text) {
-                    }
-
-                    @Override
-                    public void selectByPartialText(String partialText) {
-                    }
-
-                    @Override
-                    public IControl getSelectedElement() {
-                        return null;
-                    }
-                };
+                dropDownList = VoidControlStub.get().toIDropDownList();
             }
             return dropDownList;
 		}
