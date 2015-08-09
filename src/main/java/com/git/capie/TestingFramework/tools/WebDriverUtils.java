@@ -19,10 +19,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-public class WebDriverUtils {
+/**
+ * This class consist of Browsers enumeration, methods for Starting a Selenium
+ * WebDriver's driver, managing BrowserStack connection and desired
+ * capabilities, wrappers for managing of Selenium WebElements
+ * 
+ * @author CAPie
+ * 
+ */
 
-	private static Browsers runBrowser = null;
-	private static DesiredCapabilities browserStackCaps;
+public class WebDriverUtils {
 
 	/**
 	 * Enumeration of Browser Types
@@ -69,10 +75,9 @@ public class WebDriverUtils {
 					return new RemoteWebDriver(new URL(BrowserStackConnectionUrl.getURL()), capabilities);
 				} catch (MalformedURLException e) {
 					System.out.println(ERROR_BROWSER_STACK_CONNECTION_URL);
-					/*
-					 * logger.error(ERROR_BROWSER_STACK_CONNECTION_URL +
-					 * e.getStackTrace().toString());
-					 */
+					// logger.error(ERROR_BROWSER_STACK_CONNECTION_URL +
+					// e.getStackTrace().toString());
+
 					// TODO Develop My Exception
 					throw new RuntimeException(ERROR_BROWSER_STACK_CONNECTION_URL);
 				}
@@ -85,19 +90,41 @@ public class WebDriverUtils {
 		private long implicitlyWaitTimeout;
 		private String name;
 
+		/**
+		 * Constructor for Browsers Enumeration instance
+		 * 
+		 * @param implicitlyWaitTimeout
+		 * @param name
+		 */
 		private Browsers(long implicitlyWaitTimeout, String name) {
 			this.implicitlyWaitTimeout = implicitlyWaitTimeout;
 			this.name = name;
 		}
 
+		/**
+		 * get Browser's instance implicitly wait timeout.
+		 * 
+		 * @return implicitlyWaitTimeout
+		 */
 		public long getImplicitlyWaitTimeout() {
 			return implicitlyWaitTimeout;
 		}
 
+		/**
+		 * get Browser's instance name.
+		 * 
+		 * @return name
+		 */
 		public String getName() {
 			return name;
 		}
 
+		/**
+		 * abstract method for creation Browser's instance with some additional
+		 * params of driver's options.
+		 * 
+		 * @return WebDriver's instance
+		 */
 		abstract WebDriver start();
 
 		@Override
@@ -107,17 +134,23 @@ public class WebDriverUtils {
 	}
 
 	private final String ERROR_TAKE_SCREENSHOT = "Take Screenshot. I/O Error";
-	/*
-	 * private static Logger logger = LoggerFactory
-	 * .getLogger(WebDriverUtils.class);
-	 */
+	// private static Logger logger = LoggerFactory
+	// .getLogger(WebDriverUtils.class);
 	private volatile static WebDriverUtils instanse = null;
+	private static Browsers runBrowser = null;
+	private static DesiredCapabilities browserStackCaps;
 	private WebDriver driver;
 	private final long IMPLICITLY_WAIT_TIMEOUT = 20;
 
 	private WebDriverUtils() {
 	}
 
+	/**
+	 * A static factory for creation WebDriverUtils class without additional
+	 * parameters.
+	 * 
+	 * @return instance of WebDriverUtils class
+	 */
 	public static WebDriverUtils get() {
 		if (instanse == null) {
 			synchronized (WebDriverUtils.class) {
@@ -129,6 +162,14 @@ public class WebDriverUtils {
 		return instanse;
 	}
 
+	/**
+	 * A static factory for creation WebDriverUtils class based on setted
+	 * browser.
+	 * 
+	 * @param browser
+	 *            from Browsers enum.
+	 * @return instance of WebDriverUtils class
+	 */
 	public static WebDriverUtils get(Browsers browser) {
 		if (instanse == null) {
 			synchronized (WebDriverUtils.class) {
@@ -141,6 +182,14 @@ public class WebDriverUtils {
 		return instanse;
 	}
 
+	/**
+	 * A static factory for creation WebDriverUtils class based on BrowserStack
+	 * connection managed by Desired Capabilities.
+	 * 
+	 * @param browserStack
+	 *            desired capabilities
+	 * @return instance of WebDriverUtils class
+	 */
 	public static WebDriverUtils get(DesiredCapabilities capabilities) {
 		if (instanse == null) {
 			synchronized (WebDriverUtils.class) {
@@ -154,6 +203,11 @@ public class WebDriverUtils {
 		return instanse;
 	}
 
+	/**
+	 * Getter of Selenium's WebDriver to get access for work with browsers
+	 * 
+	 * @return WebDriver's driver
+	 */
 	WebDriver getWebDriver() {
 		if (driver == null) {
 			synchronized (WebDriverUtils.class) {
@@ -170,42 +224,82 @@ public class WebDriverUtils {
 		return driver;
 	}
 
-	public long getImplicitlyWaitTimeout() {
-		return IMPLICITLY_WAIT_TIMEOUT;
-	}
-
+	/**
+	 * Set url to browser's address line. Wrapper of selenium's:
+	 * <code>driver.get(url);</code>
+	 * 
+	 * @param url
+	 *            address
+	 */
 	public void goToUrl(String url) {
 		getWebDriver().get(url);
 	}
 
+	/**
+	 * Refers to previous page in Browser's History. Wrapper of selenium's:
+	 * <code>driver.navigate().back();</code>
+	 */
 	public void goToPreviousPage() {
 		getWebDriver().navigate().back();
 	}
 
+	/**
+	 * Refers to Next page in Browser's History. Wrapper of selenium's:
+	 * <code>driver.navigate().forward();</code>
+	 */
 	public void goToForvardPage() {
 		getWebDriver().navigate().forward();
 	}
 
+	/**
+	 * Retresh page. Wrapper of selenium's:
+	 * <code>driver.navigate().refresh();</code>
+	 */
 	public void refreshPage() {
 		getWebDriver().navigate().refresh();
 	}
 
+	/**
+	 * Get url from browser's address line. Wrapper of selenium's:
+	 * <code>driver.getCurrentUrl();</code>
+	 * 
+	 * @return url address
+	 */
 	public String getCurrentUrl() {
 		return getWebDriver().getCurrentUrl();
 	}
 
+	/**
+	 * Get page title. Wrapper of selenium's: <code>driver.getTitle();</code>
+	 * 
+	 * @return title
+	 */
 	public String getTitle() {
 		return getWebDriver().getTitle();
 	}
 
+	/**
+	 * Get source code of page. Wrapper of selenium's:
+	 * <code>driver.getPageSource();</code>
+	 * 
+	 * @return source code of page
+	 */
 	public String getPageSource() {
 		return getWebDriver().getPageSource();
 	}
 
-	public void getScreenshot(String fileName) {
+	/**
+	 * Save screenshot of web page.
+	 * 
+	 * @param filePath
+	 *            - file location path
+	 * @param fileName
+	 *            - name of screenshot
+	 */
+	public void getScreenshot(String filePath, String fileName) {
 		try {
 			File srcFile = ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.FILE);
-			FileUtils.copyFile(srcFile, new File(fileName));
+			FileUtils.copyFile(srcFile, new File(filePath + "\\" + fileName));
 		} catch (Exception e) {
 			// e.printStackTrace();
 			// logger.error(ERROR_TAKE_SCREENSHOT +
@@ -215,11 +309,29 @@ public class WebDriverUtils {
 		}
 	}
 
+	/**
+	 * Close driver, and remove WebDriverUtils instance and used browser type.
+	 */
 	public void quit() {
 		getWebDriver().quit();
 		instanse = null;
+		runBrowser = null;
 	}
 
+	/**
+	 * Getter of value of implicitly wait timeout
+	 * 
+	 * @return value of implicitly wait timeout in MILLISECONDS
+	 */
+	long getImplicitlyWaitTimeout() {
+		return IMPLICITLY_WAIT_TIMEOUT;
+	}
+
+	/**
+	 * Getter of value of BrowserSteck desired capabilities settings
+	 * 
+	 * @return BrowserSteck desired capabilities
+	 */
 	DesiredCapabilities getCapabilities() {
 		return browserStackCaps;
 	}
